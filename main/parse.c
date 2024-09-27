@@ -123,6 +123,27 @@ void	check_current_line(t_cub *cub, t_raycaste *caste)
 	cub->count++;
 }
 
+void	*ft_realloc(void *ptr, size_t old_size, size_t new_size)
+{
+	void	*new_ptr;
+	size_t	copy_size;
+
+	if (new_size == 0)
+		return (free(ptr), NULL);
+	if (!ptr)
+		return (malloc(new_size));
+	new_ptr = malloc(new_size);
+	if (!new_ptr)
+		return (NULL);
+	if (old_size < new_size)
+		copy_size = old_size;
+	else
+		copy_size = new_size;
+	memcpy(new_ptr, ptr, copy_size);
+	free(ptr);
+	return (new_ptr);
+}
+
 void	read_file(t_cub *cub, t_raycaste *caste)
 {
 	cub->line = get_next_line(cub->fd);
@@ -138,46 +159,27 @@ void	read_file(t_cub *cub, t_raycaste *caste)
 					cub->redirect_symbol), ft_free(cub), free(cub->line),
 				ft_free_symbol(cub), exit(1));
 		// read  map
-		// if (cub->count == 6)
-		// {
-		// 	cub->line = get_next_line(cub->fd);
-		// 	if (!cub->line)
-		// 		exit(printf("NULL_line\n"));
-		// 	while (cub->line)
-		// 	{
-		// 		skip_whitespaces(cub, cub->line);
-		// 		printf("%s", cub->line);
-		// 		free(cub->line);
-		// 		cub->line = get_next_line(cub->fd);
-		// 	}
-		// 	break ;
-		// }
-		// printf("line %s\n", cub->line);
+		if (cub->count == 6)
+		{
+			free(cub->line);
+			cub->line = get_next_line(cub->fd);
+			if (!cub->line)
+				exit(printf("NULL_line\n"));
+			while (cub->line)
+			{
+				caste->trimmed_line = ft_strtrim(cub->line, "\n");
+				caste->map = ft_realloc(caste->map, sizeof(char *) * caste->row,
+						sizeof(char *) * (caste->row + 2));
+				caste->map[caste->row] = ft_strdup(caste->trimmed_line);
+				free(caste->trimmed_line);
+				caste->map[caste->row + 1] = NULL;
+				caste->row++;
+				free(cub->line);
+				cub->line = get_next_line(cub->fd);
+			}
+			break ;
+		}
 		free(cub->line);
 		cub->line = get_next_line(cub->fd);
 	}
-	// printf("line : %s\n", cub->line);
 }
-
-// int main (int ac, char **av)
-// {
-// 	(void)ac;
-// 	int fd = open(av[1], O_RDONLY);
-// 	char *line = get_next_line(fd);
-// 	while (line)
-// 	{
-// 		printf("%s", line);
-// 		if (ft_strcmp(ft_strtrim(line, "\n"), "cv") == 0)
-// 		{
-// 			line = get_next_line(fd);
-// 			printf(RED"salammm\n"RESET);
-// 			break ;
-// 		}
-// 		line = get_next_line(fd);
-// 	}
-// 	while (line)
-// 	{
-// 		printf("%s", line);
-// 		line = get_next_line(fd);
-// 	}
-// }

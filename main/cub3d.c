@@ -39,13 +39,16 @@ void	init_structs(t_cub *cub, t_raycaste *caste, char **av)
 	caste->we_symbol = NULL;
 	cub->redirect_file = NULL;
 	cub->redirect_symbol = NULL;
+	caste->trimmed_line = NULL;
+	caste->map = NULL;
+	caste->row = 0;
 	cub->name_file = ft_strdup(av[1]);
 	cub->fd = open(cub->name_file, O_RDONLY);
 	if (cub->fd == -1)
 		(perror(RED "open" RESET), free(cub->name_file), exit(EXIT_FAILURE));
 }
 
-void free_caste_struct(t_raycaste *caste)
+void	free_caste_struct(t_raycaste *caste)
 {
 	free(caste->no_file);
 	free(caste->so_file);
@@ -55,6 +58,14 @@ void free_caste_struct(t_raycaste *caste)
 	free(caste->so_symbol);
 	free(caste->ea_symbol);
 	free(caste->we_symbol);
+}
+
+void	print_map(t_raycaste *caste)
+{
+	for (size_t i = 0; caste->map[i] != NULL; i++)
+	{
+		printf("%s\n", caste->map[i]); // Added newline for readability
+	}
 }
 
 // hiya li gha tgad lfuctions dial error (HHHHH)
@@ -74,6 +85,8 @@ int	main(int ac, char **av)
 	init_structs(&cub, &caste, av);
 	read_file(&cub, &caste);
 	// printf("count : %d\n", cub.count);
+	print_map(&caste);
+	free_split(caste.map);
 	free_caste_struct(&caste);
 	ft_free(&cub);
 	return (0);

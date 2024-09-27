@@ -15,6 +15,11 @@ typedef struct s_raycaste
 	char		*sky;
 	int			rgb_floor[3];
 	int			rgb_sky[3];
+	// read_map
+	int 		row;
+	int 		cols;
+	char		*trimmed_line;
+	char		**map;
 }				t_raycaste;
 
 typedef struct s_cub
