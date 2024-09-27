@@ -73,6 +73,8 @@ char	*ft_modulo(char *ptr)
 		free(ptr);
 		return (NULL);
 	}
+	if (i >= length)
+		return (free(ptr), (NULL));
 	tmp = ptr;
 	ptr = ft_substr(tmp, i, length);
 	free(tmp);

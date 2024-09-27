@@ -8,7 +8,9 @@ LIBFT_DIR = lib/
 
 SRC_GNL = get_next_line/get_next_line.c
 
-SRC_MAIN = main/cub3d.c main/check_extension.c main/parse.c
+SRC_MAIN = main/cub3d.c main/check_extension.c main/parse.c \
+		   main/split.c main/parse_rgb.c
+
 SRC = $(SRC_MAIN) $(SRC_GNL)
 
 OBJ = $(SRC:.c=.o)

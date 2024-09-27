@@ -13,60 +13,68 @@ void	print_file(t_cub *cub)
 	}
 }
 
-void ft_free(t_cub *cub)
+void	ft_free(t_cub *cub)
 {
 	free(cub->name_file);
-	free(cub->redirection_file);
-	free(cub->redirection_symbol);
+	free(cub->redirect_file);
+	free(cub->redirect_symbol);
 }
 
-void	init_struct(t_cub *cub, char **av)
+void	init_structs(t_cub *cub, t_raycaste *caste, char **av)
 {
 	cub->count = 0;
+	cub->flag_no = 0;
+	cub->flag_so = 0;
+	cub->flag_ea = 0;
+	cub->flag_we = 0;
+	cub->flag_sky = 0;
+	cub->flag_floor = 0;
+	caste->no_file = NULL;
+	caste->so_file = NULL;
+	caste->ea_file = NULL;
+	caste->we_file = NULL;
+	caste->no_symbol = NULL;
+	caste->so_symbol = NULL;
+	caste->ea_symbol = NULL;
+	caste->we_symbol = NULL;
+	cub->redirect_file = NULL;
+	cub->redirect_symbol = NULL;
 	cub->name_file = ft_strdup(av[1]);
 	cub->fd = open(cub->name_file, O_RDONLY);
 	if (cub->fd == -1)
 		(perror(RED "open" RESET), free(cub->name_file), exit(EXIT_FAILURE));
 }
 
+void free_caste_struct(t_raycaste *caste)
+{
+	free(caste->no_file);
+	free(caste->so_file);
+	free(caste->ea_file);
+	free(caste->we_file);
+	free(caste->no_symbol);
+	free(caste->so_symbol);
+	free(caste->ea_symbol);
+	free(caste->we_symbol);
+}
+
 // hiya li gha tgad lfuctions dial error (HHHHH)
 int	main(int ac, char **av)
 {
-	t_cub	cub;
+	t_cub		cub;
+	t_raycaste	caste;
 
 	if (ac != 2)
 	{
 		printf(RED "Sorry but this program does not accept more two arguments! (Ghyrha ^^)\n" RESET);
 		exit(EXIT_FAILURE);
 	}
+	cub.caste_info = &caste;
 	valid_extension(av[1]);
 	// init struct
-	init_struct(&cub, av);
-	read_file(&cub);
-	printf("count : %d\n", cub.count);
+	init_structs(&cub, &caste, av);
+	read_file(&cub, &caste);
+	// printf("count : %d\n", cub.count);
+	free_caste_struct(&caste);
 	ft_free(&cub);
 	return (0);
 }
-
-// int main (int ac, char **av)
-// {
-// 	(void)ac;
-// 	int fd = open(av[1], O_RDONLY);
-// 	char *line = get_next_line(fd);
-// 	while (line)
-// 	{
-// 		printf("%s", line);
-// 		if (ft_strcmp(ft_strtrim(line, "\n"), "cv") == 0)
-// 		{
-// 			line = get_next_line(fd);
-// 			printf(RED"salammm\n"RESET);
-// 			break;
-// 		}
-// 		line = get_next_line(fd);
-// 	}
-// 	while (line)
-// 	{
-// 		printf("%s", line);
-// 		line = get_next_line(fd);
-// 	}
-// }
