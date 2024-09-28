@@ -1,6 +1,6 @@
 #include "../_includes/cub3d.h"
 
-int		check_first_line(char *first_line)
+int	check_first_line(char *first_line)
 {
 	int	i;
 
@@ -17,12 +17,32 @@ int		check_first_line(char *first_line)
 	return (0);
 }
 
+int	valid_character_map(char *map, int *flag)
+{
+	char	*trim_line;
+	int		j;
+
+	trim_line = ft_strtrim(map, " \t");
+	if (!*flag && check_first_line(trim_line) != 0)
+		return (1);
+	*flag = 1;
+	j = 0;
+	while (trim_line[j])
+	{
+		if (trim_line[0] != '1' || trim_line[ft_strlen(trim_line) - 1] != '1')
+			return (free(trim_line), (1));
+		if (trim_line[j] != '1' && trim_line[j] != '0')
+			return (free(trim_line), (1));
+		j++;
+	}
+	free(trim_line);
+	trim_line = NULL;
+	return (0);
+}
 int	is_valid_map(char **map)
 {
-	int		i;
-	int		j;
-	char	*trim_line;
-	int		flag;
+	int	i;
+	int	flag;
 
 	flag = 0;
 	i = 0;
@@ -30,19 +50,9 @@ int	is_valid_map(char **map)
 	{
 		if (map[i][0] != '\0')
 		{
-			trim_line = ft_strtrim(map[i], " \t");
-			if (!flag && check_first_line(trim_line) != 0)
+			// valid character map
+			if (valid_character_map(map[i], &flag))
 				return (1);
-			flag = 1;
-			j = 0;
-			while (trim_line[j])
-			{
-				if (trim_line[j] != '1' && trim_line[j] != '0')
-					return (free(trim_line), (1));
-				j++;
-			}
-			free(trim_line);
-			trim_line = NULL;
 		}
 		i++;
 	}
@@ -83,7 +93,11 @@ void	read_file(t_cub *cub, t_raycaste *caste)
 				cub->line = get_next_line(cub->fd);
 			}
 			if (is_valid_map(caste->map))
-				printf(RED "Invalid Map\n" RESET);
+			{
+				(ft_free(cub), free_split(caste->map));
+				free_caste_struct(caste);
+				printf(RED "Invalid Map\n" RESET), exit(1);
+			}
 			break ;
 		}
 		free(cub->line);

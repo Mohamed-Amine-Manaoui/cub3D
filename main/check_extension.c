@@ -21,7 +21,7 @@ void	xpm_extension(char *s, t_cub *cub)
 {
 	char	*extension;
 
-	extension = ft_strrchr(s, '.');
+	extension = ft_strchr(s, '.');
 	if (!extension)
 	{
 		printf(RED " %s : invalid xpm file (Ghyrha ^^)\n" RESET,
