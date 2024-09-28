@@ -13,15 +13,17 @@ void	print_file(t_cub *cub)
 	}
 }
 
-void	ft_free(t_cub *cub)
+void	print_map(t_raycaste *caste)
 {
-	free(cub->name_file);
-	free(cub->redirect_file);
-	free(cub->redirect_symbol);
+	for (size_t i = 0; caste->map[i] != NULL; i++)
+	{
+		printf("%s\n", caste->map[i]);
+	}
 }
 
 void	init_structs(t_cub *cub, t_raycaste *caste, char **av)
 {
+	caste->row = 0;
 	cub->count = 0;
 	cub->flag_no = 0;
 	cub->flag_so = 0;
@@ -29,6 +31,7 @@ void	init_structs(t_cub *cub, t_raycaste *caste, char **av)
 	cub->flag_we = 0;
 	cub->flag_sky = 0;
 	cub->flag_floor = 0;
+	caste->map = NULL;
 	caste->no_file = NULL;
 	caste->so_file = NULL;
 	caste->ea_file = NULL;
@@ -38,34 +41,12 @@ void	init_structs(t_cub *cub, t_raycaste *caste, char **av)
 	caste->ea_symbol = NULL;
 	caste->we_symbol = NULL;
 	cub->redirect_file = NULL;
-	cub->redirect_symbol = NULL;
 	caste->trimmed_line = NULL;
-	caste->map = NULL;
-	caste->row = 0;
+	cub->redirect_symbol = NULL;
 	cub->name_file = ft_strdup(av[1]);
 	cub->fd = open(cub->name_file, O_RDONLY);
 	if (cub->fd == -1)
 		(perror(RED "open" RESET), free(cub->name_file), exit(EXIT_FAILURE));
-}
-
-void	free_caste_struct(t_raycaste *caste)
-{
-	free(caste->no_file);
-	free(caste->so_file);
-	free(caste->ea_file);
-	free(caste->we_file);
-	free(caste->no_symbol);
-	free(caste->so_symbol);
-	free(caste->ea_symbol);
-	free(caste->we_symbol);
-}
-
-void	print_map(t_raycaste *caste)
-{
-	for (size_t i = 0; caste->map[i] != NULL; i++)
-	{
-		printf("%s\n", caste->map[i]); // Added newline for readability
-	}
 }
 
 // hiya li gha tgad lfuctions dial error (HHHHH)

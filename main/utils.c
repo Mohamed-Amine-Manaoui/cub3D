@@ -67,32 +67,24 @@ char	**handle_whitespaces(char **av)
 	return (tmp[i] = NULL, tmp);
 }
 
-// hna b9it
-int	valid_rgb(char **av)
+void	*ft_realloc(void *ptr, size_t old_size, size_t new_size)
 {
-	int		i;
-	int		count;
-	char	**tmp;
-	int		r;
+	void	*new_ptr;
+	size_t	copy_size;
 
-	count = 0;
-	i = 0;
-	tmp = handle_whitespaces(av);
-	if (tmp[0] && tmp[1] && tmp[2])
-	{
-	while (tmp[i])
-	{
-		if (handle_error(tmp[i]) == -1)
-		{
-			return (free_split(tmp), 1);
-		}
-		r = ft_atoi(tmp[i]);
-		if (r < 0 || r > 255)
-			return (1);
-		i++;
-	}
-	}
+	if (new_size == 0)
+		return (free(ptr), NULL);
+	if (!ptr)
+		return (malloc(new_size));
+	new_ptr = malloc(new_size);
+	if (!new_ptr)
+		return (NULL);
+	if (old_size < new_size)
+		copy_size = old_size;
 	else
-		return (free_split(tmp), 1);
-	return (free_split(tmp), 0);
+		copy_size = new_size;
+	memcpy(new_ptr, ptr, copy_size);
+	free(ptr);
+	return (new_ptr);
 }
+
