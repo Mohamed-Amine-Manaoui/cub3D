@@ -1,6 +1,6 @@
 #include "../_includes/cub3d.h"
 
-int	check_first_line(char *first_line)
+int	check_first_last_line(char *first_line)
 {
 	int	i;
 
@@ -23,7 +23,7 @@ int	valid_character_map(char *map, int *flag)
 	int		j;
 
 	trim_line = ft_strtrim(map, " \t");
-	if (!*flag && check_first_line(trim_line) != 0)
+	if (!*flag && check_first_last_line(trim_line) != 0)
 		return (1);
 	*flag = 1;
 	j = 0;
@@ -39,22 +39,32 @@ int	valid_character_map(char *map, int *flag)
 	trim_line = NULL;
 	return (0);
 }
+
 int	is_valid_map(char **map)
 {
-	int	i;
-	int	flag;
+	int		i;
+	int		flag;
+	char	*trimed_last_l;
 
 	flag = 0;
+	trimed_last_l = NULL;
 	i = 0;
 	while (map[i])
 	{
 		if (map[i][0] != '\0')
 		{
-			// valid character map
+			printf("len : %zu\n", ft_strlen(map[i]));
 			if (valid_character_map(map[i], &flag))
 				return (1);
 		}
 		i++;
+		if (!map[i])
+		{
+			trimed_last_l = ft_strtrim(map[i - 1], " \t");
+			if (check_first_last_line(trimed_last_l))
+				return (free(trimed_last_l), (1));
+			free(trimed_last_l);
+		}
 	}
 	return (0);
 }
@@ -92,6 +102,7 @@ void	read_file(t_cub *cub, t_raycaste *caste)
 				free(cub->line);
 				cub->line = get_next_line(cub->fd);
 			}
+			//parse map
 			if (is_valid_map(caste->map))
 			{
 				(ft_free(cub), free_split(caste->map));

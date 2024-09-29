@@ -20,24 +20,28 @@ void	valid_extension(char *s)
 void	xpm_extension(char *s, t_cub *cub)
 {
 	char	*extension;
+	char	**tmp;
 
-	extension = ft_strchr(s, '.');
+	tmp = exec_split(s, " \t");
+	if (tmp[1])
+	{
+		printf(RED " %s : invalid xpm file (Ghyrha ^^)\n" RESET,
+			cub->redirect_file);
+		(ft_free(cub), free(cub->line), ft_free_symbol(cub));
+		(free_split(tmp), exit(1));
+	}
+	free_split(tmp);
+	extension = ft_strrchr(s, '.');
 	if (!extension)
 	{
 		printf(RED " %s : invalid xpm file (Ghyrha ^^)\n" RESET,
 			cub->redirect_file);
-		ft_free(cub);
-		free(cub->line);
-		ft_free_symbol(cub);
-		exit(1);
+		(ft_free(cub), free(cub->line), ft_free_symbol(cub), exit(1));
 	}
 	if (ft_strcmp(extension, ".xpm"))
 	{
 		printf(RED "%s : Invalid xpm extension (Ghyrha ^^)\n" RESET,
 			cub->redirect_file);
-		ft_free(cub);
-		free(cub->line);
-		ft_free_symbol(cub);
-		exit(1);
+		(ft_free(cub), free(cub->line), ft_free_symbol(cub), exit(1));
 	}
 }
