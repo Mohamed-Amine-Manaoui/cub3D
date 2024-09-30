@@ -25,7 +25,7 @@ int	valid_character_map(char *map, int *flag, t_cub *cub)
 	(void)cub;
 	trim_line = ft_strtrim(map, " \t\n");
 	if (!*flag && check_first_last_line(trim_line) != 0)
-		return (1);
+		return (free(trim_line), (1));
 	*flag = 1;
 	j = 0;
 	while (trim_line[j])
