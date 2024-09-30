@@ -15,9 +15,12 @@ void	print_file(t_cub *cub)
 
 void	print_map(t_raycaste *caste)
 {
-	for (size_t i = 0; caste->map[i] != NULL; i++)
+	size_t i = 0; while(caste->map[i] != NULL)
 	{
+		if (!caste->map[i])
+			break;
 		printf("%s\n", caste->map[i]);
+	i++;
 	}
 }
 
@@ -25,12 +28,14 @@ void	init_structs(t_cub *cub, t_raycaste *caste, char **av)
 {
 	caste->row = 0;
 	cub->count = 0;
+	cub->flag_p = 0;
 	cub->flag_no = 0;
 	cub->flag_so = 0;
 	cub->flag_ea = 0;
 	cub->flag_we = 0;
 	cub->flag_sky = 0;
 	cub->flag_floor = 0;
+	cub->flag_help = 0;
 	caste->map = NULL;
 	caste->no_file = NULL;
 	caste->so_file = NULL;

@@ -24,12 +24,14 @@ typedef struct s_raycaste
 
 typedef struct s_cub
 {
-	int			flag_floor;
-	int			flag_sky;
+	int 		flag_p;
 	int			flag_no;
 	int			flag_so;
 	int			flag_ea;
 	int			flag_we;
+	int			flag_sky;
+	int 		flag_help;
+	int			flag_floor;
 	int			count;
 	int			fd;
 	char		*name_file;

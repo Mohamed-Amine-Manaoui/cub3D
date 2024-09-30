@@ -85,6 +85,7 @@ void	*ft_realloc(void *ptr, size_t old_size, size_t new_size)
 		copy_size = new_size;
 	memcpy(new_ptr, ptr, copy_size);
 	free(ptr);
+	ptr = NULL;
 	return (new_ptr);
 }
 

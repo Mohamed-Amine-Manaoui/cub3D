@@ -12,17 +12,17 @@ int	valid_rgb(char **av)
 	tmp = handle_whitespaces(av);
 	if (tmp[0] && tmp[1] && tmp[2])
 	{
-	while (tmp[i])
-	{
-		if (handle_error(tmp[i]) == -1)
+		while (tmp[i])
 		{
-			return (free_split(tmp), 1);
+			if (handle_error(tmp[i]) == -1)
+			{
+				return (free_split(tmp), 1);
+			}
+			r = ft_atoi(tmp[i]);
+			if (r < 0 || r > 255)
+				return (free_split(tmp), 1);
+			i++;
 		}
-		r = ft_atoi(tmp[i]);
-		if (r < 0 || r > 255)
-			return (1);
-		i++;
-	}
 	}
 	else
 		return (free_split(tmp), 1);
@@ -97,4 +97,3 @@ void	store_symbol(char **symbol, char **file, t_cub *cub, int *flag)
 	*file = ft_strdup(cub->redirect_file);
 	*flag = 1;
 }
-
