@@ -14,19 +14,20 @@
 /* ************************************************************************** */
 #include "../libft.h"
 
-char	*ft_strdup(const char *s1)
+char *ft_strdup(const char *s1)
 {
-	char	*str;
-	size_t	len;
+    char *str;
+    size_t len;
 
-	if (!s1)
-		return (NULL);
-	len = ft_strlen(s1);
-	str = malloc((len + 1) * sizeof(char));
-	if (!str)
-		return (NULL);
-	ft_strlcpy(str, s1, len + 1);
-	return (str);
+    if (!s1)
+        return (NULL);
+    len = ft_strlen(s1);
+    str = malloc((len + 1) * sizeof(char));
+    if (!str)
+        return (NULL);
+    ft_strlcpy(str, s1, len + 1);
+    str[len] = '\0';
+    return (str);
 }
 
 /*int main(void)

@@ -1,6 +1,6 @@
 CC = cc
 
-CFLAGS = -Wall -Werror -Wextra -g3 #-fsanitize=address
+CFLAGS = -Wall -Werror -Wextra -g3 -g #-fsanitize=address 
 
 MLX_FLAGS = -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
 
@@ -10,7 +10,8 @@ SRC_GNL = get_next_line/get_next_line.c
 
 SRC_MAIN = main/cub3d.c main/check_extension.c main/parse.c \
 		   main/split.c main/utils.c main/_free.c main/parse_symbol_rgb.c \
-		   main/skip_whitespaces.c
+		   main/skip_whitespaces.c main/read_file.c \
+		   main/resize_map.c main/valid_map.c
 
 SRC = $(SRC_MAIN) $(SRC_GNL)
 

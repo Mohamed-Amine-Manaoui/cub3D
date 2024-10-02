@@ -35,7 +35,6 @@ void	init_structs(t_cub *cub, t_raycaste *caste, char **av)
 	cub->flag_we = 0;
 	cub->flag_sky = 0;
 	cub->flag_floor = 0;
-	cub->flag_help = 0;
 	caste->map = NULL;
 	caste->no_file = NULL;
 	caste->so_file = NULL;

@@ -89,3 +89,25 @@ void	*ft_realloc(void *ptr, size_t old_size, size_t new_size)
 	return (new_ptr);
 }
 
+char	**duplicate_string(char **map)
+{
+	int		i;
+	char	**nw_map;
+	int		j;
+
+	i = 0;
+	while (map[i] != NULL)
+		i++;
+	nw_map = malloc((i + 1) * sizeof(char *));
+	if (!nw_map)
+		return (NULL);
+	j = 0;
+	while (j < i)
+	{
+		nw_map[j] = ft_strdup(map[j]);
+		j++;
+	}
+	nw_map[i] = NULL;
+	return (nw_map);
+}
+

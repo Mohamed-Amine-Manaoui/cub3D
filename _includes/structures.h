@@ -30,7 +30,6 @@ typedef struct s_cub
 	int			flag_ea;
 	int			flag_we;
 	int			flag_sky;
-	int 		flag_help;
 	int			flag_floor;
 	int			count;
 	int			fd;

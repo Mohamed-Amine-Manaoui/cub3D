@@ -26,4 +26,23 @@ void	store_rgb(int *tab, t_cub *cub, int *flag);
 void	store_symbol(char **symbol, char **file, t_cub *cub, int *flag);
 void	skip_whitespaces(t_cub *cub, char *str);
 void	check_symbol_file(char **tmp, char **check);
+char	**duplicate_string(char **map);
+int	    check_first_last_line(char *first_line);
+int	    trim_decale(char **map, int i, int j);
+// valid map
+int	    last_catch_error(char **map, t_cub *cub);
+int	    any_empty_line(char **map);
+int	    decalage_line(char **map);
+int	    valid_character_map(char *map, int *flag, t_cub *cub);
+int	    is_valid_map(char **map, t_cub *cub);
+// read file
+void	process_header_lines(t_cub *cub, t_raycaste *caste);
+void	read_map(t_cub *cub, t_raycaste *caste);
+void	validate_map(char **clone_map, t_cub *cub, t_raycaste *caste);
+void	check_map_presence(t_cub *cub, t_raycaste *caste);
+void	process_file_lines(t_cub *cub, t_raycaste *caste);
+// resize map
+int	    find_start(char **map);
+int	    find_end(char **map, int start);
+void	resize_map(char **map, t_cub *cub);
 #endif
