@@ -1,5 +1,22 @@
 #include "../_includes/cub3d.h"
 
+int	trim_decale(char **map, int i, int j)
+{
+	char	*trim;
+
+	trim = ft_strtrim(map[i + 1], " \t\n");
+	if (i > 0 && ft_strlen(trim) <= (size_t)j)
+		return (free(trim), 1);
+	free(trim);
+	trim = ft_strtrim(map[i - 1], " \t\n");
+	if (i > 0 && ft_strlen(trim) <= (size_t)j)
+	{
+		free(trim);
+		return (1);
+	}
+	free(trim);
+	return (0);
+}
 
 void	process_header_lines(t_cub *cub, t_raycaste *caste)
 {
@@ -54,33 +71,5 @@ void	check_map_presence(t_cub *cub, t_raycaste *caste)
 		ft_free(cub);
 		free_caste_struct(caste);
 		exit(printf(RED "Map not found\n" RESET));
-	}
-}
-
-void	process_file_lines(t_cub *cub, t_raycaste *caste)
-{
-	char	**clone_map;
-
-	while (cub->line)
-	{
-		process_header_lines(cub, caste);
-		if (cub->count == 6)
-		{
-			check_map_presence(cub, caste);
-			// Read and store the map
-			read_map(cub, caste);
-			// Validate the map
-			clone_map = duplicate_string(caste->map);
-			validate_map(clone_map, cub, caste);
-			free_split(clone_map);
-			break ;
-		}
-		free(cub->line);
-		cub->line = get_next_line(cub->fd);
-	}
-	if (!cub->line)
-	{
-		ft_free(cub);
-		exit(printf(RED "Empty file\n" RESET));
 	}
 }

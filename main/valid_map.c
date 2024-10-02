@@ -1,5 +1,23 @@
 #include "../_includes/cub3d.h"
 
+int	check_first_last_line(char *first_line)
+{
+	int	i;
+
+	i = 0;
+	while (first_line[i])
+	{
+		if (first_line[i] != '1' && (first_line[i] != 32
+				|| first_line[i] != '\t'))
+		{
+			printf(RED "Map should be entouring by 1\n" RESET);
+			return (1);
+		}
+		i++;
+	}
+	return (0);
+}
+
 int	any_empty_line(char **map)
 {
 	int		i;
@@ -79,34 +97,5 @@ int	valid_character_map(char *map, int *flag, t_cub *cub)
 	}
 	free(trim_line);
 	trim_line = NULL;
-	return (0);
-}
-
-int	is_valid_map(char **map, t_cub *cub)
-{
-	char	*trimed_last_l;
-
-	int(i), (flag);
-	flag = 0;
-	trimed_last_l = NULL;
-	i = 0;
-	while (map[i])
-	{
-		if (map[i][0] != '\0')
-		{
-			if (valid_character_map(map[i], &flag, cub))
-				return (1);
-		}
-		i++;
-		if (!map[i])
-		{
-			trimed_last_l = ft_strtrim(map[i - 1], " \t");
-			if (check_first_last_line(trimed_last_l))
-				return (free(trimed_last_l), (1));
-			free(trimed_last_l);
-		}
-	}
-	if (last_catch_error(map, cub))
-		return (1);
 	return (0);
 }

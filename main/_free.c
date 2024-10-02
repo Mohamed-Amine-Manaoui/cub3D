@@ -7,18 +7,6 @@ void	ft_free(t_cub *cub)
 	free(cub->redirect_symbol);
 }
 
-void ft_free_symbol (t_cub *cub)
-{
-	free(cub->caste_info->no_file);
-	free(cub->caste_info->no_symbol);
-	free(cub->caste_info->so_file);
-	free(cub->caste_info->so_symbol);
-	free(cub->caste_info->ea_file);
-	free(cub->caste_info->ea_symbol);
-	free(cub->caste_info->we_file);
-	free(cub->caste_info->we_symbol);
-}
-
 void	free_split(char **split)
 {
 	int	i;
@@ -32,6 +20,18 @@ void	free_split(char **split)
 	}
 	free(split);
 	split = NULL;
+}
+
+void	ft_free_symbol(t_cub *cub)
+{
+	free(cub->caste_info->no_file);
+	free(cub->caste_info->no_symbol);
+	free(cub->caste_info->so_file);
+	free(cub->caste_info->so_symbol);
+	free(cub->caste_info->ea_file);
+	free(cub->caste_info->ea_symbol);
+	free(cub->caste_info->we_file);
+	free(cub->caste_info->we_symbol);
 }
 
 void	free_caste_struct(t_raycaste *caste)
