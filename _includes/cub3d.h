@@ -7,6 +7,7 @@
 
 
 char	**exec_split(char *str, char *charset);
+//utils
 int		check_alpha(char *av);
 int		handle_error(char *str);
 char	**handle_whitespaces(char **av);
@@ -42,6 +43,7 @@ int	    find_start(char **map);
 int	    find_end(char **map, int start);
 void	resize_map(char **map, t_cub *cub);
 // skip whitespaces
+char    symbolic_character(char c);
 void	check_symbol_file(char **tmp, char **check);
 void	skip_whitespaces(t_cub *cub, char *str);
 
@@ -51,5 +53,4 @@ int	    last_catch_error(char **map, t_cub *cub);
 int	    any_empty_line(char **map);
 int	    decalage_line(char **map);
 int	    valid_character_map(char *map, int *flag, t_cub *cub);
-
 #endif

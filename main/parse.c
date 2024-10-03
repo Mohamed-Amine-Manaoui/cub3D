@@ -49,11 +49,11 @@ void	process_file_lines(t_cub *cub, t_raycaste *caste)
 		}
 		free(cub->line);
 		cub->line = get_next_line(cub->fd);
-	}
-	if (!cub->line)
-	{
-		ft_free(cub);
-		exit(printf(RED "Empty file\n" RESET));
+	// if (!cub->line)
+	// {
+	// 	ft_free(cub);
+	// 	exit(printf(RED "Empty file\n" RESET));
+	// }
 	}
 }
 

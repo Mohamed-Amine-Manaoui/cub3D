@@ -15,12 +15,15 @@ void	print_file(t_cub *cub)
 
 void	print_map(t_raycaste *caste)
 {
-	size_t i = 0; while(caste->map[i] != NULL)
+	size_t	i;
+
+	i = 0;
+	while (caste->map[i] != NULL)
 	{
 		if (!caste->map[i])
-			break;
+			break ;
 		printf("%s\n", caste->map[i]);
-	i++;
+		i++;
 	}
 }
 
@@ -53,7 +56,7 @@ void	init_structs(t_cub *cub, t_raycaste *caste, char **av)
 		(perror(RED "open" RESET), free(cub->name_file), exit(EXIT_FAILURE));
 }
 
-// hiya li gha tgad lfuctions dial error (HHHHH)
+// hiya li gha tgad lfuctions dial error nxaellah (HHHHH)
 int	main(int ac, char **av)
 {
 	t_cub		cub;
@@ -70,9 +73,12 @@ int	main(int ac, char **av)
 	init_structs(&cub, &caste, av);
 	read_file(&cub, &caste);
 	// printf("count : %d\n", cub.count);
-	print_map(&caste);
-	free_split(caste.map);
+	// print_map(&caste);
 	free_caste_struct(&caste);
 	ft_free(&cub);
+	if (caste.map)
+		free_split(caste.map);
+	if (!caste.map)
+		return(printf(RED"Empty File !!\n"RESET));
 	return (0);
 }

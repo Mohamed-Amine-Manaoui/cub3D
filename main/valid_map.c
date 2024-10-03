@@ -89,9 +89,10 @@ int	valid_character_map(char *map, int *flag, t_cub *cub)
 		if (trim_line[0] != '1' || trim_line[ft_strlen(trim_line) - 1] != '1')
 			return (free(trim_line), (1));
 		if (trim_line[j] != '1' && trim_line[j] != '0' && (trim_line[j] != 32
-				|| trim_line[j] != '\t') && trim_line[j] != 'N')
+				|| trim_line[j] != '\t')
+			&& !symbolic_character(trim_line[j]))
 			return (free(trim_line), (1));
-		if (trim_line[j] == 'N')
+		if (symbolic_character(trim_line[j]))
 			cub->flag_p++;
 		j++;
 	}

@@ -1,5 +1,10 @@
 #include "../_includes/cub3d.h"
 
+char symbolic_character(char c)
+{
+	return (c == 'N' || c == 'S' || c == 'W' || c == 'E');
+}
+
 void	check_symbol_file(char **tmp, char **check)
 {
 	if (*check)

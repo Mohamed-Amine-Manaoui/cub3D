@@ -33,7 +33,7 @@ all : $(NAME)
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME): $(OBJ) $(LIBFT)
-	$(CC) $(CFLAGS) $(MLX_FLAGS) $(OBJ) -L$(LIBFT_DIR) -lft -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJ) -L$(LIBFT_DIR) $(MLX_FLAGS) -lft -o $(NAME)
 	@printf "$(GREEN)✓  $(NAME)\n$(RESET)"
 
 $(LIBFT):
