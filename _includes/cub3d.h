@@ -4,7 +4,6 @@
 # include "libraries.h"
 # define RED "\033[1;31m"
 # define RESET "\033[0m"
-#define SQUARE_SIZE 48
 
 char	**exec_split(char *str, char *charset);
 //utils

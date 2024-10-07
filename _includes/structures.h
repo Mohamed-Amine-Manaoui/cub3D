@@ -1,6 +1,17 @@
 #ifndef STRUCTURES_H
 # define STRUCTURES_H
 
+# define SQUARE_SIZE 48
+# define A 97
+# define D 100
+# define S 115
+# define W 119
+# define ESC 65307
+# define LEFT 65361
+# define UP 65362
+# define RIGHT 65363
+# define DOWN 65364
+
 typedef struct s_raycaste
 {
 	char		*no_file;
@@ -49,6 +60,15 @@ typedef struct s_mlx
 	size_t		w_h_map[2];
 	int			x_player;
 	int			y_player;
+	int 		player_x_pos;
+	int 		player_y_pos;
+	//
+	void		*img;
+	char		*addr;
+	int			bits_per_pixel;
+	int			line_length;
+	int			endian;
+	t_raycaste	*caste_info;
 }				t_mlx;
 
 #endif
