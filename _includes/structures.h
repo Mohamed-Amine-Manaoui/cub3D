@@ -2,6 +2,8 @@
 # define STRUCTURES_H
 
 # define SQUARE_SIZE 48
+#define KeyPress 2
+#define KeyPressMask (1L << 0)
 # define A 97
 # define D 100
 # define S 115
