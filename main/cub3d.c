@@ -127,7 +127,7 @@ void	paint_square(t_mlx *mlx, int col, int row, char c)
 		i++;
 	}
 	if (symbolic_character(c))
-			draw_cercle(mlx, mlx->x_player, mlx->y_player, 6);
+		draw_cercle(mlx, mlx->x_player, mlx->y_player, 6);
 }
 
 void	render_paint_square(t_mlx *mlx, int col, int row, char c)
@@ -199,30 +199,87 @@ void	render_map(t_raycaste *caste, t_mlx *mlx)
 	my_mlx_pixel_put(mlx, mlx->x_player, mlx->y_player, 0x0000FF);
 }
 
+void	draw_line(t_mlx *mlx, int x1, int y1, int x2, int y2, int color)
+{
+	int	dx;
+	int	dy;
+	int	sx;
+	int	sy;
+	int	err;
+	int	e2;
+
+	// ila kant forbidden nsayboouha sahla
+	dx = abs(x2 - x1);
+	dy = abs(y2 - y1);
+	err = dx - dy;
+	if (x1 < x2)
+		sx = 1;
+	else
+		sx = -1;
+	if (y1 < y2)
+		sy = 1;
+	else
+		sy = -1;
+	while (x1 != x2 || y1 != y2)
+	{
+		my_mlx_pixel_put(mlx, x1, y1, color);
+		e2 = 2 * err;
+		if (e2 > -dy)
+		{
+			err -= dy;
+			x1 += sx;
+		}
+		if (e2 < dx)
+		{
+			err += dx;
+			y1 += sy;
+		}
+	}
+}
+
 int	key_hook(int keycode, t_mlx *mlx)
 {
+	int	x_end;
+	int	y_end;
+
 	if (keycode == ESC)
 		exit(0);
 	else if (keycode == A)
 	{
 		mlx->x_player -= 3;
+		x_end = mlx->x_player - 30;
+		y_end = mlx->y_player;
+		render_map(mlx->caste_info, mlx);
+		draw_line(mlx, mlx->x_player, mlx->y_player, x_end, y_end, 0xFF0000);
 	}
 	else if (keycode == D)
 	{
 		mlx->x_player += 3;
+		x_end = mlx->x_player + 30;
+		y_end = mlx->y_player;
+		render_map(mlx->caste_info, mlx);
+		draw_line(mlx, mlx->x_player, mlx->y_player, x_end, y_end, 0xFF0000);
 	}
 	else if (keycode == W)
 	{
 		mlx->y_player -= 3;
+		x_end = mlx->x_player;
+		y_end = mlx->y_player - 30;
+		render_map(mlx->caste_info, mlx);
+		draw_line(mlx, mlx->x_player, mlx->y_player, x_end, y_end, 0xFF0000);
 	}
 	else if (keycode == S)
 	{
 		mlx->y_player += 3;
+		x_end = mlx->x_player;
+		y_end = mlx->y_player + 30;
+		render_map(mlx->caste_info, mlx);
+		draw_line(mlx, mlx->x_player, mlx->y_player, x_end, y_end, 0xFF0000);
 	}
-	render_map(mlx->caste_info, mlx);
 	mlx_put_image_to_window(mlx->ptr, mlx->ptr_win, mlx->img, 0, 0);
 	return (0);
 }
+
 int	main(int ac, char **av)
 {
 	t_cub		cub;
