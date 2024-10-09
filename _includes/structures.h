@@ -9,10 +9,10 @@
 # define S 115
 # define W 119
 # define ESC 65307
-# define LEFT_ARROW 65361
-# define UP_ARROW 65362
-# define RIGHT_ARROW 65363
-# define DOWN_ARROW 65364
+# define LEFT 65361
+# define UP 65362
+# define RIGHT 65363
+# define DOWN 65364
 
 typedef struct s_raycaste
 {
@@ -60,11 +60,12 @@ typedef struct s_mlx
 	void		*ptr;
 	void		*ptr_win;
 	size_t		w_h_map[2];
-	int			x_player;
-	int			y_player;
+	double			x_player;
+	double			y_player;
 	int 		player_x_pos;
 	int 		player_y_pos;
-	int 		angle;
+	double 		angle;
+	double 		line_angle;
 	//
 	void		*img;
 	char		*addr;

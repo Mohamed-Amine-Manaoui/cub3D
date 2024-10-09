@@ -111,7 +111,7 @@ void	paint_square(t_mlx *mlx, int col, int row, char c)
 	if (c == '1')
 		color = 0x0000FF;                       //(bleu)
 	else if (c == '0' || symbolic_character(c)) // (blanc)
-		color = 0xFFFFFF;                       // (blanc)
+		color = 0xFFFFFF;                      
 	else
 		color = 0x808080; // (gray)
 	i = 0;
@@ -139,7 +139,7 @@ void	render_paint_square(t_mlx *mlx, int col, int row, char c)
 	if (c == '1')
 		color = 0x0000FF;                       //(bleu)
 	else if (c == '0' || symbolic_character(c)) // (blanc)
-		color = 0xFFFFFF;                       // (blanc)
+		color = 0xFFFFFF;                      
 	else
 		color = 0x808080; // (gray)
 	i = 0;
@@ -239,43 +239,48 @@ void	draw_line(t_mlx *mlx, int x1, int y1, int x2, int y2, int color)
 
 int	key_hook(int keycode, t_mlx *mlx)
 {
-	int	x_end;
-	int	y_end;
+	int		x_end;
+	int		y_end;
+	double	line_length;
+	double	speed;
 
+	line_length = 40;
+	speed = 3.0;
 	if (keycode == ESC)
 		exit(0);
-	else if (keycode == A)
-	{
-		mlx->x_player -= 3;
-		x_end = mlx->x_player - 30;
-		y_end = mlx->y_player;
-		render_map(mlx->caste_info, mlx);
-		draw_line(mlx, mlx->x_player, mlx->y_player, x_end, y_end, 0xFF0000);
-	}
-	else if (keycode == D)
-	{
-		mlx->x_player += 3;
-		x_end = mlx->x_player + 30;
-		y_end = mlx->y_player;
-		render_map(mlx->caste_info, mlx);
-		draw_line(mlx, mlx->x_player, mlx->y_player, x_end, y_end, 0xFF0000);
-	}
 	else if (keycode == W)
 	{
-		mlx->y_player -= 3;
-		x_end = mlx->x_player;
-		y_end = mlx->y_player - 30;
-		render_map(mlx->caste_info, mlx);
-		draw_line(mlx, mlx->x_player, mlx->y_player, x_end, y_end, 0xFF0000);
+		mlx->x_player += speed * cos(mlx->line_angle);
+		mlx->y_player += speed * sin(mlx->line_angle);
 	}
 	else if (keycode == S)
 	{
-		mlx->y_player += 3;
-		x_end = mlx->x_player;
-		y_end = mlx->y_player + 30;
-		render_map(mlx->caste_info, mlx);
-		draw_line(mlx, mlx->x_player, mlx->y_player, x_end, y_end, 0xFF0000);
+		mlx->x_player -= speed * cos(mlx->line_angle);
+		mlx->y_player -= speed * sin(mlx->line_angle);
 	}
+	else if (keycode == A)
+	{
+		mlx->x_player -= speed * sin(mlx->line_angle);
+		mlx->y_player += speed * cos(mlx->line_angle);
+	}
+	else if (keycode == D)
+	{
+		mlx->x_player += speed * sin(mlx->line_angle);
+		mlx->y_player -= speed * cos(mlx->line_angle);
+	}
+	else if (keycode == UP)
+	{
+		mlx->line_angle += 0.1;
+	}
+	else if (keycode == DOWN)
+	{
+		mlx->line_angle -= 0.1;
+	}
+	mlx_clear_window(mlx->ptr, mlx->ptr_win);
+	x_end = mlx->x_player + line_length * cos(mlx->line_angle);
+	y_end = mlx->y_player + line_length * sin(mlx->line_angle);
+	render_map(mlx->caste_info, mlx);
+	draw_line(mlx, mlx->x_player, mlx->y_player, x_end, y_end, 0xFF0000);
 	mlx_put_image_to_window(mlx->ptr, mlx->ptr_win, mlx->img, 0, 0);
 	return (0);
 }
