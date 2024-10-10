@@ -10,13 +10,13 @@ void	check_symbol_file(char **tmp, char **check)
 	if (*check)
 		free(*check);
 	*check = ft_strtrim(*tmp, " \t\n");
-	if (*check[0] == '\0')
+	if (*check && *check[0] == '\0')
 	{
 		free(*check);
 		*check = NULL;
 	}
-	free(*tmp);
 }
+
 
 void	skip_whitespaces(t_cub *cub, char *str)
 {
@@ -33,6 +33,7 @@ void	skip_whitespaces(t_cub *cub, char *str)
 		j++;
 	tmp = ft_substr(str, i, j);
 	check_symbol_file(&tmp, &cub->redirect_symbol);
+	free(tmp);
 	tmp = NULL;
 	j--;
 	k = 0;
@@ -41,4 +42,5 @@ void	skip_whitespaces(t_cub *cub, char *str)
 		k++;
 	tmp = ft_substr(str, j, k);
 	check_symbol_file(&tmp, &cub->redirect_file);
+	free(tmp);
 }

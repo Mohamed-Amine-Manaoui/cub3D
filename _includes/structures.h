@@ -73,6 +73,8 @@ typedef struct s_mlx
 	int			line_length;
 	int			endian;
 	t_raycaste	*caste_info;
+	t_cub 		*cub_info;
 }				t_mlx;
+
 
 #endif

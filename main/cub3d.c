@@ -77,6 +77,8 @@ void	my_mlx_pixel_put(t_mlx *mlx, int x, int y, int color)
 {
 	char	*dst;
 
+	if (!mlx || !mlx->addr)
+		return ;
 	dst = mlx->addr + (y * mlx->line_length + x * (mlx->bits_per_pixel / 8));
 	*(unsigned int *)dst = color;
 }
@@ -111,7 +113,7 @@ void	paint_square(t_mlx *mlx, int col, int row, char c)
 	if (c == '1')
 		color = 0x0000FF;                       //(bleu)
 	else if (c == '0' || symbolic_character(c)) // (blanc)
-		color = 0xFFFFFF;                      
+		color = 0xFFFFFF;
 	else
 		color = 0x808080; // (gray)
 	i = 0;
@@ -139,7 +141,7 @@ void	render_paint_square(t_mlx *mlx, int col, int row, char c)
 	if (c == '1')
 		color = 0x0000FF;                       //(bleu)
 	else if (c == '0' || symbolic_character(c)) // (blanc)
-		color = 0xFFFFFF;                      
+		color = 0xFFFFFF;
 	else
 		color = 0x808080; // (gray)
 	i = 0;
@@ -199,6 +201,44 @@ void	render_map(t_raycaste *caste, t_mlx *mlx)
 	my_mlx_pixel_put(mlx, mlx->x_player, mlx->y_player, 0x0000FF);
 }
 
+// void	draw_line(t_mlx *mlx, int x1, int y1, int x2, int y2, int color)
+// {
+// 	int	dx;
+// 	int	dy;
+// 	int	sx;
+// 	int	sy;
+// 	int	err;
+// 	int	e2;
+
+// 	// ila kant forbidden nsayboouha sahla
+// 	dx = abs(x2 - x1);
+// 	dy = abs(y2 - y1);
+// 	err = dx - dy;
+// 	if (x1 < x2)
+// 		sx = 1;
+// 	else
+// 		sx = -1;
+// 	if (y1 < y2)
+// 		sy = 1;
+// 	else
+// 		sy = -1;
+// 	while (x1 != x2 || y1 != y2)
+// 	{
+// 		my_mlx_pixel_put(mlx, x1, y1, color);
+// 		e2 = 2 * err;
+// 		if (e2 > -dy)
+// 		{
+// 			err -= dy;
+// 			x1 += sx;
+// 		}
+// 		if (e2 < dx)
+// 		{
+// 			err += dx;
+// 			y1 += sy;
+// 		}
+// 	}
+// }
+
 void	draw_line(t_mlx *mlx, int x1, int y1, int x2, int y2, int color)
 {
 	int	dx;
@@ -208,7 +248,8 @@ void	draw_line(t_mlx *mlx, int x1, int y1, int x2, int y2, int color)
 	int	err;
 	int	e2;
 
-	// ila kant forbidden nsayboouha sahla
+	if (!mlx)
+		return ;
 	dx = abs(x2 - x1);
 	dy = abs(y2 - y1);
 	err = dx - dy;
@@ -235,6 +276,19 @@ void	draw_line(t_mlx *mlx, int x1, int y1, int x2, int y2, int color)
 			y1 += sy;
 		}
 	}
+	my_mlx_pixel_put(mlx, x2, y2, color);
+}
+
+int	is_wall(t_mlx *mlx, double next_x, double next_y)
+{
+	int	map_x;
+	int	map_y;
+
+	map_x = (int)(next_x / 48);
+	map_y = (int)(next_y / 48);
+	if (mlx->caste_info->map[map_y][map_x] == '1')
+		return (1);
+	return (0);
 }
 
 int	key_hook(int keycode, t_mlx *mlx)
@@ -243,39 +297,66 @@ int	key_hook(int keycode, t_mlx *mlx)
 	int		y_end;
 	double	line_length;
 	double	speed;
+	double	next_x;
+	double	next_y;
 
 	line_length = 40;
 	speed = 3.0;
 	if (keycode == ESC)
+	{
+		mlx_destroy_image(mlx->ptr, mlx->img);
+		mlx_destroy_window(mlx->ptr, mlx->ptr_win);
+		mlx_destroy_display(mlx->ptr);
+		free(mlx->ptr);
+		ft_free(mlx->cub_info);
+		free_split(mlx->caste_info->map);
+		free_caste_struct(mlx->caste_info);
 		exit(0);
+	}
 	else if (keycode == W)
 	{
-		mlx->x_player += speed * cos(mlx->line_angle);
-		mlx->y_player += speed * sin(mlx->line_angle);
+		next_x = mlx->x_player + speed * cos(mlx->line_angle);
+		next_y = mlx->y_player + speed * sin(mlx->line_angle);
+		if (!is_wall(mlx, next_x, next_y))
+		{
+			mlx->x_player = next_x;
+			mlx->y_player = next_y;
+		}
 	}
 	else if (keycode == S)
 	{
-		mlx->x_player -= speed * cos(mlx->line_angle);
-		mlx->y_player -= speed * sin(mlx->line_angle);
-	}
-	else if (keycode == A)
-	{
-		mlx->x_player -= speed * sin(mlx->line_angle);
-		mlx->y_player += speed * cos(mlx->line_angle);
+		next_x = mlx->x_player - speed * cos(mlx->line_angle);
+		next_y = mlx->y_player - speed * sin(mlx->line_angle);
+		if (!is_wall(mlx, next_x, next_y))
+		{
+			mlx->x_player = next_x;
+			mlx->y_player = next_y;
+		}
 	}
 	else if (keycode == D)
 	{
-		mlx->x_player += speed * sin(mlx->line_angle);
-		mlx->y_player -= speed * cos(mlx->line_angle);
+		next_x = mlx->x_player - speed * sin(mlx->line_angle);
+		next_y = mlx->y_player + speed * cos(mlx->line_angle);
+		if (!is_wall(mlx, next_x, next_y))
+		{
+			mlx->x_player = next_x;
+			mlx->y_player = next_y;
+		}
+	}
+	else if (keycode == A)
+	{
+		next_x = mlx->x_player + speed * sin(mlx->line_angle);
+		next_y = mlx->y_player - speed * cos(mlx->line_angle);
+		if (!is_wall(mlx, next_x, next_y))
+		{
+			mlx->x_player = next_x;
+			mlx->y_player = next_y;
+		}
 	}
 	else if (keycode == UP)
-	{
 		mlx->line_angle += 0.1;
-	}
 	else if (keycode == DOWN)
-	{
 		mlx->line_angle -= 0.1;
-	}
 	mlx_clear_window(mlx->ptr, mlx->ptr_win);
 	x_end = mlx->x_player + line_length * cos(mlx->line_angle);
 	y_end = mlx->y_player + line_length * sin(mlx->line_angle);
@@ -283,6 +364,18 @@ int	key_hook(int keycode, t_mlx *mlx)
 	draw_line(mlx, mlx->x_player, mlx->y_player, x_end, y_end, 0xFF0000);
 	mlx_put_image_to_window(mlx->ptr, mlx->ptr_win, mlx->img, 0, 0);
 	return (0);
+}
+
+void	ft_close(t_mlx *mlx)
+{
+		mlx_destroy_image(mlx->ptr, mlx->img);
+		mlx_destroy_window(mlx->ptr, mlx->ptr_win);
+		mlx_destroy_display(mlx->ptr);
+		free(mlx->ptr);
+		ft_free(mlx->cub_info);
+		free_split(mlx->caste_info->map);
+		free_caste_struct(mlx->caste_info);
+		exit(0);
 }
 
 int	main(int ac, char **av)
@@ -296,8 +389,12 @@ int	main(int ac, char **av)
 		printf(RED "Sorry but this program does not accept more than two arguments! (Ghyrha ^^)\n" RESET);
 		exit(EXIT_FAILURE);
 	}
+	memset(&cub, 0, sizeof(cub));
+	memset(&caste, 0, sizeof(caste));
+	memset(&mlx, 0, sizeof(mlx));
 	cub.caste_info = &caste;
 	mlx.caste_info = &caste;
+	mlx.cub_info = &cub;
 	valid_extension(av[1]);
 	init_structs(&cub, &caste, av);
 	read_file(&cub, &caste);
@@ -306,10 +403,13 @@ int	main(int ac, char **av)
 	mlx.ptr_win = mlx_new_window(mlx.ptr, mlx.w_h_map[0] * 48, mlx.w_h_map[1]
 			* 48, "siri ghiyriha !!");
 	mlx.img = mlx_new_image(mlx.ptr, mlx.w_h_map[0] * 48, mlx.w_h_map[1] * 48);
+	if (!mlx.img)
+		return (0);
 	mlx.addr = mlx_get_data_addr(mlx.img, &mlx.bits_per_pixel, &mlx.line_length,
 			&mlx.endian);
 	paint_map(&caste, &mlx);
 	mlx_hook(mlx.ptr_win, KeyPress, KeyPressMask, key_hook, &mlx);
+	mlx_hook(mlx.ptr_win, 17, 0, (void *)ft_close, &mlx);
 	mlx_put_image_to_window(mlx.ptr, mlx.ptr_win, mlx.img, 0, 0);
 	mlx_loop(mlx.ptr);
 	return (0);

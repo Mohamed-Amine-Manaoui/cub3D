@@ -13,7 +13,10 @@ int	is_valid_map(char **map, t_cub *cub)
 		if (map[i][0] != '\0')
 		{
 			if (valid_character_map(map[i], &flag, cub))
-				return (1);
+				{
+					return (1);
+				}
+					
 		}
 		i++;
 		if (!map[i])
@@ -25,7 +28,9 @@ int	is_valid_map(char **map, t_cub *cub)
 		}
 	}
 	if (last_catch_error(map, cub))
+	{
 		return (1);
+	}
 	return (0);
 }
 
