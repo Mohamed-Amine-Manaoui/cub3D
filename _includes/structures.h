@@ -13,6 +13,11 @@
 # define UP 65362
 # define RIGHT 65363
 # define DOWN 65364
+# define LINE_LENGTH 40
+# define SPEED 3.0
+
+	// line_length = 40;
+	// speed = 3.0;
 
 typedef struct s_raycaste
 {
@@ -72,6 +77,13 @@ typedef struct s_mlx
 	int			bits_per_pixel;
 	int			line_length;
 	int			endian;
+	//draw line
+	int	dx;
+	int	dy;
+	int	sx;
+	int	sy;
+	int	e2;
+	int	err;
 	t_raycaste	*caste_info;
 	t_cub 		*cub_info;
 }				t_mlx;

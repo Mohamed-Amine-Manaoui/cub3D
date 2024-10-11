@@ -38,6 +38,8 @@ SRCS			=	checks/ft_isalnum.c\
 					ft_calloc.c\
 					ft_split.c\
 					garbage_collector.c\
+					ft_abs.c\
+					ft_realloc.c\
 					
 OBJS			= $(SRCS:.c=.o)
 

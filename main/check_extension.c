@@ -45,3 +45,20 @@ void	xpm_extension(char *s, t_cub *cub)
 		(ft_free(cub), free(cub->line), ft_free_symbol(cub), exit(1));
 	}
 }
+
+void	calcul_with_height(t_mlx *mlx, t_raycaste *caste)
+{
+	int	i;
+
+	i = 0;
+	mlx->w_h_map[0] = ft_strlen(caste->map[0]);
+	while (caste->map[i])
+	{
+		if (ft_strlen(caste->map[i + 1]) > mlx->w_h_map[0])
+		{
+			mlx->w_h_map[0] = ft_strlen(caste->map[i + 1]);
+		}
+		i++;
+	}
+	mlx->w_h_map[1] = i;
+}

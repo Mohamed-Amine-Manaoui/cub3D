@@ -6,7 +6,7 @@
 /*   By: mmanaoui <mmanaoui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 11:07:35 by wel-kass          #+#    #+#             */
-/*   Updated: 2024/09/24 21:06:03 by mmanaoui         ###   ########.fr       */
+/*   Updated: 2024/10/11 17:30:44 by mmanaoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ void				ft_putstr_fd(char const *s, int fd);
 void				ft_putendl_fd(char const *s, int fd);
 void				ft_putnbr_fd(int n, int fd);
 ssize_t				ft_write_fd(const char *s, int fd);
+int					ft_abs(int n);
+void				*ft_realloc(void *ptr, size_t old_size, size_t new_size);
 
 t_list				*ft_lstnew(void *content);
 t_list				*ft_lstlast(t_list *lst);

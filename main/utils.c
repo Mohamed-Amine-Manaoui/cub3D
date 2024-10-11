@@ -67,28 +67,6 @@ char	**handle_whitespaces(char **av)
 	return (tmp[i] = NULL, tmp);
 }
 
-void	*ft_realloc(void *ptr, size_t old_size, size_t new_size)
-{
-	void	*new_ptr;
-	size_t	copy_size;
-
-	if (new_size == 0)
-		return (free(ptr), NULL);
-	if (!ptr)
-		return (malloc(new_size));
-	new_ptr = malloc(new_size);
-	if (!new_ptr)
-		return (NULL);
-	if (old_size < new_size)
-		copy_size = old_size;
-	else
-		copy_size = new_size;
-	memcpy(new_ptr, ptr, copy_size);
-	free(ptr);
-	ptr = NULL;
-	return (new_ptr);
-}
-
 char	**duplicate_string(char **map)
 {
 	int		i;
@@ -111,3 +89,14 @@ char	**duplicate_string(char **map)
 	return (nw_map);
 }
 
+int	is_wall(t_mlx *mlx, double next_x, double next_y)
+{
+	int	map_x;
+	int	map_y;
+
+	map_x = (int)(next_x / 48);
+	map_y = (int)(next_y / 48);
+	if (mlx->caste_info->map[map_y][map_x] == '1')
+		return (1);
+	return (0);
+}
