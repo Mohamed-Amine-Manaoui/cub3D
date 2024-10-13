@@ -35,19 +35,28 @@ int	is_valid_map(char **map, t_cub *cub)
 		if (map[i][0] != '\0')
 		{
 			if (valid_character_map(map[i], &flag, cub))
+			{
+				printf("1\n");
 				return (1);
+			}
 		}
 		i++;
 		if (!map[i])
 		{
 			trimed_last_l = ft_strtrim(map[i - 1], " \t");
 			if (check_first_last_line(trimed_last_l))
+			{
+				printf("11\n");
 				return (free(trimed_last_l), (1));
+			}
 			free(trimed_last_l);
 		}
 	}
 	if (last_catch_error(map, cub))
+	{
+		printf("111\n");
 		return (1);
+	}
 	return (0);
 }
 
@@ -85,7 +94,7 @@ void	read_file(t_cub *cub, t_raycaste *caste)
 	if (!cub->line)
 	{
 		ft_free(cub);
-		exit(printf(RED "Empty file\n" RESET));
+		exit(printf(RED "Empty fileEEE\n" RESET));
 	}
 	process_file_lines(cub, caste);
 }

@@ -1,12 +1,18 @@
 SO amine.xpm
+
+
 NO amine.xpm
-EA amine.xpm
+
+
+EA  amine.xpm
+
+
 WE amine.xpm                      
 
 
 F 1,2,3
-C 1,2,3
+C 1,2,4294967296
 
-11111111
-100N0001
+11111111                              111
+10000S01          111
 11111111

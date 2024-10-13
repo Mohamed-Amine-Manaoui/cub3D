@@ -5,8 +5,10 @@ int	trim_decale(char **map, int i, int j)
 	char	*trim;
 
 	trim = ft_strtrim(map[i + 1], " \t\n");
-	if (i > 0 && ft_strlen(trim) <= (size_t)j)
+	if (i > 0 && ft_strlen(map[i + 1]) <= (size_t)j)
+	{
 		return (free(trim), 1);
+	}
 	free(trim);
 	trim = ft_strtrim(map[i - 1], " \t\n");
 	if (i > 0 && ft_strlen(trim) <= (size_t)j)

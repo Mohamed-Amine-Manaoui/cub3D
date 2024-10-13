@@ -7,9 +7,10 @@ int	check_first_last_line(char *first_line)
 	i = 0;
 	while (first_line[i])
 	{
-		if (first_line[i] != '1' && (first_line[i] != 32
-				|| first_line[i] != '\t'))
+		if (first_line[i] != '1' && first_line[i] != 32
+			&& first_line[i] != '\t')
 		{
+			// printf("ff : %d\n", first_line[i]);
 			printf(RED "Map should be entouring by 1\n" RESET);
 			return (1);
 		}
@@ -49,13 +50,15 @@ int	decalage_line(char **map)
 			if (map[i][j] == '0' || map[i][j] == 'N')
 			{
 				if (map[i][j + 1] && !(map[i][j + 1] == '0' || map[i][j
-						+ 1] == '1' || symbolic_character( map[i][j + 1])))
+						+ 1] == '1' || symbolic_character(map[i][j + 1])))
 					return (1);
 				if (j > 0 && !(map[i][j - 1] == '0' || map[i][j - 1] == '1'
 						|| symbolic_character(map[i][j - 1])))
 					return (1);
 				if (trim_decale(map, i, j))
+				{
 					return (1);
+				}
 			}
 		}
 	}
@@ -68,9 +71,14 @@ int	last_catch_error(char **map, t_cub *cub)
 		return (1);
 	resize_map(map, cub);
 	if (any_empty_line(cub->caste_info->map))
-	return 1;
+	{
+		printf("222\n");
+		return (1);
+	}
 	if (decalage_line(cub->caste_info->map))
 	{
+		printf("333\n");
+
 		return (1);
 	}
 	return (0);
@@ -90,7 +98,8 @@ int	valid_character_map(char *map, int *flag, t_cub *cub)
 	{
 		if (trim_line[0] != '1' || trim_line[ft_strlen(trim_line) - 1] != '1')
 			return (free(trim_line), (1));
-		if (trim_line[j] != '1' && trim_line[j] != '0' && (trim_line[j] != 32 || trim_line[j] != '\t') && !symbolic_character(trim_line[j]))
+		if (trim_line[j] != '1' && trim_line[j] != '0' && (trim_line[j] != 32
+				&& trim_line[j] != '\t') && !symbolic_character(trim_line[j]))
 			return (free(trim_line), (1));
 		if (symbolic_character(trim_line[j]))
 			cub->flag_p++;
